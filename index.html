@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Prasenjit Online Shop</title>
+<style>*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}body{background:#f5f5f5}header{background:#111;color:#fff;padding:15px;text-align:center}.container{max-width:1000px;margin:20px auto;padding:10px}.products{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}.card{background:#fff;border-radius:10px;padding:10px;box-shadow:0 2px 6px rgba(0,0,0,.1)}.card img{width:100%;height:120px;object-fit:cover;border-radius:8px}.card h3{font-size:14px;margin:8px 0 4px}.card p{color:#e91e63;font-weight:bold}.form{background:#fff;padding:15px;border-radius:10px;margin-bottom:20px}.form input{width:100%;padding:10px;margin:6px 0;border:1px solid #ddd;border-radius:6px}.form button{width:100%;padding:10px;background:#111;color:#fff;border:none;border-radius:6px;cursor:pointer}</style>
+</head>
+<body>
+<header><h1>🛒 Prasenjit Online Shop</h1></header>
+<div class="container">
+<div class="form"><h3>নতুন প্রোডাক্ট যোগ করো</h3><input id="name" placeholder="নাম"><input id="price" type="number" placeholder="দাম"><input id="image" placeholder="ছবির লিংক"><button onclick="addProduct()">Add</button><p id="status"></p></div>
+<div id="products" class="products"></div></div>
+<script>
+const API="https://prasenjit-shop-api.krishokbazer.workers.dev";
+async function loadProducts(){try{const r=await fetch(API+"/api/products");const d=await r.json();document.getElementById("products").innerHTML=d.length?d.map(p=>`<div class="card"><img src="${p.image||'https://via.placeholder.com/150'}"><h3>${p.name}</h3><p>₹${p.price}</p></div>`).join(""):"<p>কোনো প্রোডাক্ট নেই</p>";}catch(e){document.getElementById("products").innerHTML="API Error - Worker deploy করো";}}
+async function addProduct(){const name=document.getElementById("name").value;const price=parseFloat(document.getElementById("price").value);const image=document.getElementById("image").value;if(!name||!price)return alert("নাম দাম দাও");document.getElementById("status").innerText="যোগ হচ্ছে...";await fetch(API+"/api/products",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name,price,image})});document.getElementById("status").innerText="হয়ে গেছে!";loadProducts();}
+loadProducts();
+</script>
+</body>
+</html>
