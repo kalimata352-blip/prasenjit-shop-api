@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Owner Panel - Prasenjit Shop</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+<style>body{font-family:'Noto Sans Bengali', sans-serif;}</style>
+</head>
+<body class="bg-zinc-900 min-h-screen text-white">
+<!-- Login Screen -->
+<div id="loginScreen" class="min-h-screen flex items-center justify-center p-4">
+  <div class="bg-white text-black rounded-2xl p-6 w-full max-w-sm">
+    <h1 class="text-xl font-bold text-center">🔐 Owner Login</h1>
+    <p class="text-xs text-center text-zinc-500 mt-1">Prasenjit Online Shop - Admin Only</p>
+    <p class="text-xs text-center mt-2 bg-amber-100 rounded p-2">Ahmadpur, Nohana, Birbhum<br>📞 6295633283</p>
+    <input id="pass" type="password" placeholder="Password দাও" class="w-full border rounded-xl px-4 py-3 mt-4 outline-none focus:border-black">
+    <button onclick="login()" class="w-full bg-black text-white rounded-xl py-3 mt-3 font-bold">Login</button>
+    <p class="text-[11px] text-zinc-400 mt-3 text-center">Default Password: <b>admin6295</b><br>পরে তুমি বদলে নিতে পারবে</p>
+    <p id="loginError" class="text-red-500 text-xs mt-2 hidden text-center">ভুল পাসওয়ার্ড!</p>
+  </div>
+</div>
+
+<!-- Admin Panel -->
+<div id="adminScreen" class="hidden">
+<header class="bg-black border-b border-zinc-800 sticky top-0 z-50">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+    <div>
+      <h1 class="font-bold">Owner Panel</h1>
+      <p class="text-[11px] text-zinc-400">WB, Birbhum, Ahmadpur, Nohana - 6295633283</p>
+    </div>
+    <div class="flex gap-2">
+      <a href="data:text/html;base64,PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImJuIj4KPGhlYWQ+CjxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAiPgo8dGl0bGU+UHJhc2Vuaml0IE9ubGluZSBTaG9wIC0gQmlzaG51cHVyIFNhcmk8L3RpdGxlPgo8c2NyaXB0IHNyYz0iaHR0cHM6Ly9jZG4udGFpbHdpbmRjc3MuY29tIj48L3NjcmlwdD4KPGxpbmsgaHJlZj0iaHR0cHM6Ly9mb250cy5nb29nbGVhcGlzLmNvbS9jc3MyP2ZhbWlseT1Ob3RvK1NhbnMrQmVuZ2FsaTp3Z2h0QDQwMDs2MDA7NzAwJmRpc3BsYXk9c3dhcCIgcmVsPSJzdHlsZXNoZWV0Ij4KPHN0eWxlPmJvZHl7Zm9udC1mYW1pbHk6J05vdG8gU2FucyBCZW5nYWxpJywgc2Fucy1zZXJpZjt9PC9zdHlsZT4KPC9oZWFkPgo8Ym9keSBjbGFzcz0iYmctWyNmY2Y4ZjNdIj4KCjwhLS0gSGVhZGVyIC0tPgo8aGVhZGVyIGNsYXNzPSJiZy1ibGFjayB0ZXh0LXdoaXRlIHN0aWNreSB0b3AtMCB6LTUwIj4KICA8ZGl2IGNsYXNzPSJtYXgtdy02eGwgbXgtYXV0byBweC00IHB5LTMgZmxleCBqdXN0aWZ5LWJldHdlZW4gaXRlbXMtY2VudGVyIj4KICAgIDxoMSBjbGFzcz0idGV4dC1sZyBmb250LWJvbGQiPvCfm5IgUHJhc2Vuaml0IE9ubGluZSBTaG9wPC9oMT4KICAgIDxzcGFuIGNsYXNzPSJ0ZXh0LXhzIGJnLXdoaXRlIHRleHQtYmxhY2sgcHgtMyBweS0xIHJvdW5kZWQtZnVsbCI+QmlzaG51cHVyIFNwZWNpYWw8L3NwYW4+CiAgPC9kaXY+CjwvaGVhZGVyPgoKPGRpdiBjbGFzcz0ibWF4LXctNnhsIG14LWF1dG8gcC00Ij4KCjwhLS0gQWRkIEZvcm0gLS0+CjxkaXYgY2xhc3M9ImJnLXdoaXRlIHJvdW5kZWQtMnhsIHNoYWRvdy1zbSBwLTUgbWItNiBib3JkZXIiPgogIDxoMiBjbGFzcz0iZm9udC1ib2xkIHRleHQtWzE4cHhdIG1iLTMiPuCmqOCmpOCngeCmqCDgpqrgp43gprDgp4vgpqHgpr7gppXgp43gpp8g4Kav4KeL4KaXIOCmleCmsOCnizwvaDI+CiAgPGRpdiBjbGFzcz0iZ3JpZCBncmlkLWNvbHMtMSBtZDpncmlkLWNvbHMtMyBnYXAtMyI+CiAgICA8aW5wdXQgaWQ9Im5hbWUiIHBsYWNlaG9sZGVyPSLgpqjgpr7gpq4gLSDgpq/gp4fgpq7gpqggSmFtIERhbmkgU2FyaSIgY2xhc3M9ImJvcmRlciByb3VuZGVkLXhsIHB4LTQgcHktMyBvdXRsaW5lLW5vbmUgZm9jdXM6Ym9yZGVyLWJsYWNrIj4KICAgIDxpbnB1dCBpZD0icHJpY2UiIHR5cGU9Im51bWJlciIgcGxhY2Vob2xkZXI9IuCmpuCmvuCmriAtIOCmr+Cnh+CmruCmqCAyODAwIiBjbGFzcz0iYm9yZGVyIHJvdW5kZWQteGwgcHgtNCBweS0zIG91dGxpbmUtbm9uZSBmb2N1czpib3JkZXItYmxhY2siPgogICAgPGlucHV0IGlkPSJpbWFnZSIgcGxhY2Vob2xkZXI9IuCmm+CmrOCmv+CmsCDgprLgpr/gppngp43gppUgKGh0dHBzOi8vLi4uKSIgY2xhc3M9ImJvcmRlciByb3VuZGVkLXhsIHB4LTQgcHktMyBvdXRsaW5lLW5vbmUgZm9jdXM6Ym9yZGVyLWJsYWNrIj4KICA8L2Rpdj4KICA8YnV0dG9uIG9uY2xpY2s9ImFkZFByb2R1Y3QoKSIgaWQ9ImFkZEJ0biIgY2xhc3M9InctZnVsbCBtdC0zIGJnLWJsYWNrIHRleHQtd2hpdGUgcm91bmRlZC14bCBweS0zIGZvbnQtYm9sZCBob3ZlcjpiZy16aW5jLTgwMCI+KyBBZGQgUHJvZHVjdDwvYnV0dG9uPgogIDxwIGNsYXNzPSJ0ZXh0LXhzIHRleHQtemluYy01MDAgbXQtMiI+4Kaf4Ka/4Kaq4Ka4OiBHb29nbGUg4KaPIFNhcmkgaW1hZ2Ugc2VhcmNoIOCmleCmsOCnhyBpbWFnZSDgpo/gprAg4KaJ4Kaq4KawIGxvbmcgcHJlc3MgPiBDb3B5IGltYWdlIGxpbmsg4KaV4Kaw4KeHIOCmj+CmluCmvuCmqOCnhyBwYXN0ZSDgppXgprDgp4s8L3A+CjwvZGl2PgoKPCEtLSBQcm9kdWN0cyAtLT4KPGgyIGNsYXNzPSJmb250LWJvbGQgdGV4dC14bCBtYi0zIj7gpobgpq7gpr7gpqbgp4fgprAg4KaV4Ka+4Kay4KeH4KaV4Ka24KaoPC9oMj4KPGRpdiBpZD0icHJvZHVjdHMiIGNsYXNzPSJncmlkIGdyaWQtY29scy0yIG1kOmdyaWQtY29scy00IGdhcC00Ij4KICA8cCBjbGFzcz0iY29sLXNwYW4tZnVsbCB0ZXh0LWNlbnRlciBweS0xMCB0ZXh0LXppbmMtNDAwIj7gprLgp4vgpqEg4Ka54Kaa4KeN4Kab4KeHLi4uPC9wPgo8L2Rpdj4KCjwvZGl2PgoKPHNjcmlwdD4KY29uc3QgQVBJID0gJ2h0dHBzOi8vcHJhc2Vuaml0LXNob3AtYXBpLmtyaXNob2tiYXplci53b3JrZXJzLmRldi9hcGkvcHJvZHVjdHMnOwpjb25zdCBXSEFUU0FQUF9OVU1CRVIgPSAnOTE5OTk5OTk5OTk5JzsgLy8g4KaP4KaW4Ka+4Kao4KeHIOCmpOCni+CmruCmvuCmsCBXaGF0c0FwcCDgpqjgpr7gpq7gp43gpqzgpr7gprAg4Kam4Ka+4KaTIDkxIOCmuOCmuQoKYXN5bmMgZnVuY3Rpb24gbG9hZFByb2R1Y3RzKCl7CiAgY29uc3QgY29udGFpbmVyID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3Byb2R1Y3RzJyk7CiAgdHJ5ewogICAgY29uc3QgcmVzID0gYXdhaXQgZmV0Y2goQVBJKTsKICAgIGNvbnN0IGRhdGEgPSBhd2FpdCByZXMuanNvbigpOwogICAgaWYoIWRhdGEubGVuZ3RoKXsKICAgICAgY29udGFpbmVyLmlubmVySFRNTCA9ICc8cCBjbGFzcz0iY29sLXNwYW4tZnVsbCB0ZXh0LWNlbnRlciBweS0xMCB0ZXh0LXppbmMtNDAwIj7gppXgp4vgpqjgp4sg4Kaq4KeN4Kaw4KeL4Kah4Ka+4KaV4KeN4KafIOCmqOCnh+Cmhywg4KaJ4Kaq4Kaw4KeHIOCmq+CmsOCnjeCmriDgpqXgp4fgppXgp4cg4Kav4KeL4KaXIOCmleCmsOCnizwvcD4nOwogICAgICByZXR1cm47CiAgICB9CiAgICBjb250YWluZXIuaW5uZXJIVE1MID0gZGF0YS5yZXZlcnNlKCkubWFwKHAgPT4gYAogICAgICA8ZGl2IGNsYXNzPSJiZy13aGl0ZSByb3VuZGVkLTJ4bCBvdmVyZmxvdy1oaWRkZW4gc2hhZG93LXNtIGJvcmRlciBob3ZlcjpzaGFkb3ctbWQgdHJhbnNpdGlvbiI+CiAgICAgICAgPGRpdiBjbGFzcz0iYXNwZWN0LVszLzRdIGJnLXppbmMtMTAwIG92ZXJmbG93LWhpZGRlbiI+CiAgICAgICAgICA8aW1nIHNyYz0iJHtwLmltYWdlIHx8ICdodHRwczovL3ZpYS5wbGFjZWhvbGRlci5jb20vMzAweDQwMD90ZXh0PU5vK0ltYWdlJ30iIAogICAgICAgICAgICAgICBvbmVycm9yPSJ0aGlzLnNyYz0naHR0cHM6Ly9pbWFnZXMudW5zcGxhc2guY29tL3Bob3RvLTE2MTAwMzA0Njk5ODMtOThlNTUwZDYxOTNjP3c9NDAwJyIKICAgICAgICAgICAgICAgY2xhc3M9InctZnVsbCBoLWZ1bGwgb2JqZWN0LWNvdmVyIj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8ZGl2IGNsYXNzPSJwLTMiPgogICAgICAgICAgPGgzIGNsYXNzPSJmb250LXNlbWlib2xkIHRleHQtWzE0cHhdIGxlYWRpbmctdGlnaHQgdHJ1bmNhdGUiPiR7cC5uYW1lfTwvaDM+CiAgICAgICAgICA8cCBjbGFzcz0idGV4dC1waW5rLTYwMCBmb250LWJvbGQgbXQtMSI+4oK5JHtwLnByaWNlfTwvcD4KICAgICAgICAgIDxkaXYgY2xhc3M9ImdyaWQgZ3JpZC1jb2xzLTIgZ2FwLTIgbXQtMyI+CiAgICAgICAgICAgIDxhIGhyZWY9Imh0dHBzOi8vd2EubWUvJHtXSEFUU0FQUF9OVU1CRVJ9P3RleHQ94KaG4Kau4Ka/JTIwJHtlbmNvZGVVUklDb21wb25lbnQocC5uYW1lKX0lMjAo4oK5JHtwLnByaWNlfSklMjDgpoXgprDgp43gpqHgpr7gprAlMjDgppXgprDgpqTgp4clMjDgpprgpr7gpociIHRhcmdldD0iX2JsYW5rIgogICAgICAgICAgICAgICBjbGFzcz0idGV4dC1jZW50ZXIgYmctZ3JlZW4tNTAwIHRleHQtd2hpdGUgdGV4dC14cyBweS0yIHJvdW5kZWQtbGcgZm9udC1ib2xkIj5XaGF0c0FwcDwvYT4KICAgICAgICAgICAgPGJ1dHRvbiBvbmNsaWNrPSJkZWxldGVQcm9kdWN0KCcke3AuaWR9JykiIGNsYXNzPSJiZy16aW5jLTEwMCB0ZXh0LXppbmMtNjAwIHRleHQteHMgcHktMiByb3VuZGVkLWxnIj5EZWxldGU8L2J1dHRvbj4KICAgICAgICAgIDwvZGl2PgogICAgICAgIDwvZGl2PgogICAgICA8L2Rpdj4KICAgIGApLmpvaW4oJycpOwogIH1jYXRjaChlKXsKICAgIGNvbnRhaW5lci5pbm5lckhUTUwgPSAnPHAgY2xhc3M9ImNvbC1zcGFuLWZ1bGwgdGV4dC1jZW50ZXIgcHktMTAgdGV4dC1yZWQtNTAwIj5BUEkgRXJyb3IgLSAnK2UubWVzc2FnZSsnPC9wPic7CiAgfQp9Cgphc3luYyBmdW5jdGlvbiBhZGRQcm9kdWN0KCl7CiAgY29uc3QgbmFtZSA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCduYW1lJykudmFsdWUudHJpbSgpOwogIGNvbnN0IHByaWNlID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3ByaWNlJykudmFsdWUudHJpbSgpOwogIGNvbnN0IGltYWdlID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2ltYWdlJykudmFsdWUudHJpbSgpOwogIGlmKCFuYW1lIHx8ICFwcmljZSl7IGFsZXJ0KCfgpqjgpr7gpq4g4KaG4KawIOCmpuCmvuCmriDgpqbgpr7gppMnKTsgcmV0dXJuOyB9CgogIGNvbnN0IGJ0biA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdhZGRCdG4nKTsKICBidG4uaW5uZXJUZXh0ID0gJ0FkZGluZy4uLic7CiAgYnRuLmRpc2FibGVkID0gdHJ1ZTsKCiAgdHJ5ewogICAgY29uc3QgcmVzID0gYXdhaXQgZmV0Y2goQVBJLCB7CiAgICAgIG1ldGhvZDogJ1BPU1QnLAogICAgICBoZWFkZXJzOiB7J0NvbnRlbnQtVHlwZSc6J2FwcGxpY2F0aW9uL2pzb24nfSwKICAgICAgYm9keTogSlNPTi5zdHJpbmdpZnkoe25hbWUsIHByaWNlOiBOdW1iZXIocHJpY2UpLCBpbWFnZTogaW1hZ2UgfHwgJ2h0dHBzOi8vaW1hZ2VzLnVuc3BsYXNoLmNvbS9waG90by0xNjEwMDMwNDY5OTgzLTk4ZTU1MGQ2MTkzYz93PTQwMCd9KQogICAgfSk7CiAgICBpZighcmVzLm9rKSB0aHJvdyBuZXcgRXJyb3IoJ0ZhaWxlZCcpOwogICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ25hbWUnKS52YWx1ZT0nJzsKICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdwcmljZScpLnZhbHVlPScnOwogICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2ltYWdlJykudmFsdWU9Jyc7CiAgICBsb2FkUHJvZHVjdHMoKTsKICB9Y2F0Y2goZSl7IGFsZXJ0KCdBZGQg4KaV4Kaw4Kak4KeHIOCmquCmvuCmsOCmsuCmvuCmriDgpqjgpr46ICcrZS5tZXNzYWdlKTsgfQogIGJ0bi5pbm5lclRleHQgPSAnKyBBZGQgUHJvZHVjdCc7CiAgYnRuLmRpc2FibGVkID0gZmFsc2U7Cn0KCmFzeW5jIGZ1bmN0aW9uIGRlbGV0ZVByb2R1Y3QoaWQpewogIGlmKCFjb25maXJtKCfgpo/gpocg4Kaq4KeN4Kaw4KeL4Kah4Ka+4KaV4KeN4Kaf4Kaf4Ka+IOCmoeCmv+CmsuCmv+CmnyDgppXgprDgpqzgp4c/JykpIHJldHVybjsKICB0cnl7CiAgICBhd2FpdCBmZXRjaChgJHtBUEl9P2lkPSR7aWR9YCwge21ldGhvZDogJ0RFTEVURSd9KTsKICAgIGxvYWRQcm9kdWN0cygpOwogIH1jYXRjaChlKXsgYWxlcnQoJ0RlbGV0ZSDgprngprLgp4sg4Kao4Ka+Jyk7IH0KfQoKbG9hZFByb2R1Y3RzKCk7Cjwvc2NyaXB0Pgo8L2JvZHk+CjwvaHRtbD4K" target="_blank" class="text-xs bg-zinc-800 px-3 py-2 rounded-full">🛒 দোকান দেখো</a>
+      <button onclick="logout()" class="text-xs bg-red-600 px-3 py-2 rounded-full">Logout</button>
+    </div>
+  </div>
+</header>
+
+<div class="max-w-6xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
+  <!-- Add Product -->
+  <div class="bg-zinc-800 rounded-2xl p-5">
+    <h2 class="font-bold mb-3">+ নতুন প্রোডাক্ট</h2>
+    <input id="name" placeholder="নাম" class="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 mb-3 text-white outline-none">
+    <input id="price" type="number" placeholder="দাম" class="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 mb-3 text-white outline-none">
+    <div class="bg-zinc-900 border border-dashed border-zinc-600 rounded-xl p-3 mb-3">
+      <input id="fileInput" type="file" accept="image/*" capture="environment" class="w-full text-xs">
+      <img id="preview" class="hidden w-full h-40 object-cover rounded-xl mt-3">
+      <p id="status" class="text-[11px] text-zinc-400 mt-2">মোবাইল থেকে ছবি তোলো</p>
+    </div>
+    <input id="image" placeholder="অথবা ছবির লিঙ্ক" class="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-2 mb-3 text-white outline-none text-sm">
+    <button onclick="addProduct()" id="addBtn" class="w-full bg-white text-black rounded-xl py-3 font-bold">Add Product</button>
+    
+    <div class="mt-6 pt-6 border-t border-zinc-700">
+      <h3 class="font-bold text-sm mb-2">🏪 দোকানের তথ্য</h3>
+      <p class="text-xs text-zinc-300 leading-5">
+        Owner: Prasenjit Mondal<br>
+        Address: Nohana, Ahmadpur, Birbhum, WB<br>
+        Phone: 6295633283<br>
+        API: prasenjit-shop-api.krishokbazer.workers.dev
+      </p>
+    </div>
+  </div>
+
+  <!-- Product List -->
+  <div class="lg:col-span-2">
+    <div class="bg-zinc-800 rounded-2xl p-5">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="font-bold">সব প্রোডাক্ট (<span id="count">0</span>)</h2>
+        <button onclick="loadProducts()" class="text-xs bg-zinc-700 px-3 py-1 rounded-full">Refresh</button>
+      </div>
+      <div id="products" class="space-y-3">লোড হচ্ছে...</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+const API = 'https://prasenjit-shop-api.krishokbazer.workers.dev/api/products';
+const ADMIN_PASS = 'admin6295'; // এটা তুমি পরে বদলে দেবে
+let base64Image = '';
+
+// Auth
+function login(){
+  if(document.getElementById('pass').value === ADMIN_PASS){
+    localStorage.setItem('prasenjit_admin', 'true');
+    showAdmin();
+  } else {
+    document.getElementById('loginError').classList.remove('hidden');
+  }
+}
+function showAdmin(){
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('adminScreen').classList.remove('hidden');
+  loadProducts();
+}
+function logout(){
+  localStorage.removeItem('prasenjit_admin');
+  location.reload();
+}
+if(localStorage.getItem('prasenjit_admin') === 'true'){ showAdmin(); }
+
+document.getElementById('fileInput').addEventListener('change', async (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  document.getElementById('status').innerText = 'ছবি ছোট করা হচ্ছে...';
+  base64Image = await compressImage(file);
+  document.getElementById('preview').src = base64Image;
+  document.getElementById('preview').classList.remove('hidden');
+  document.getElementById('status').innerText = '✅ রেডি';
+});
+
+function compressImage(file){
+  return new Promise((resolve)=>{
+    const reader = new FileReader();
+    reader.onload = (e)=>{
+      const img = new Image();
+      img.onload = ()=>{
+        const canvas = document.createElement('canvas');
+        const maxW = 800;
+        let w = img.width, h = img.height;
+        if(w > maxW){ h = h*(maxW/w); w = maxW; }
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img,0,0,w,h);
+        resolve(canvas.toDataURL('image/jpeg',0.7));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+async function loadProducts(){
+  const container = document.getElementById('products');
+  try{
+    const res = await fetch(API);
+    const data = await res.json();
+    document.getElementById('count').innerText = data.length;
+    if(!data.length){ container.innerHTML = '<p class="text-zinc-400 text-sm">কোনো প্রোডাক্ট নেই</p>'; return; }
+    container.innerHTML = data.reverse().map(p=>`
+      <div class="bg-zinc-900 rounded-xl p-3 flex gap-3 border border-zinc-800">
+        <img src="${p.image}" class="w-20 h-20 object-cover rounded-lg bg-zinc-800">
+        <div class="flex-1">
+          <h3 class="font-bold text-sm">${p.name}</h3>
+          <p class="text-pink-400 text-sm">₹${p.price}</p>
+          <p class="text-[10px] text-zinc-500 mt-1 truncate">${p.id}</p>
+        </div>
+        <button onclick="deleteProduct('${p.id}')" class="bg-red-600 h-fit px-3 py-2 rounded-lg text-xs">Delete</button>
+      </div>
+    `).join('');
+  }catch(e){ container.innerHTML = 'Error: '+e.message; }
+}
+
+async function addProduct(){
+  const name = document.getElementById('name').value.trim();
+  const price = document.getElementById('price').value.trim();
+  let image = document.getElementById('image').value.trim();
+  if(base64Image) image = base64Image;
+  if(!name || !price || !image){ alert('নাম, দাম, ছবি তিনটাই লাগবে'); return; }
+  const btn = document.getElementById('addBtn');
+  btn.innerText = 'Adding...'; btn.disabled=true;
+  try{
+    await fetch(API, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({name, price:Number(price), image})});
+    document.getElementById('name').value=''; document.getElementById('price').value=''; document.getElementById('image').value=''; document.getElementById('fileInput').value=''; document.getElementById('preview').classList.add('hidden'); base64Image='';
+    loadProducts();
+  }catch(e){ alert(e.message); }
+  btn.innerText='Add Product'; btn.disabled=false;
+}
+
+async function deleteProduct(id){
+  if(!confirm('Delete করবে?')) return;
+  await fetch(`${API}?id=${id}`, {method:'DELETE'});
+  loadProducts();
+}
+</script>
+</body>
+</html>
