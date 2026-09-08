@@ -32,4 +32,5 @@ export default {
     return new Response("API OK - Use /api/products", { headers });
   }
 }
+ 
 
