@@ -8,7 +8,7 @@ not_found_handling = "single-page-application"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "prasenjit-volunteer-db"
+database_name = "prasenjit-shop-api"
 database_id = "82a3374e-ff31-4263-b985-1b44adfd645a"
 
 [vars]
