@@ -1,5 +1,5 @@
 {
-  "name": "prasenjit-volunteer-app",
+  "name": "prasenjit-shop-api",
   "version": "1.0.0",
   "scripts": {
     "deploy": "wrangler deploy",
