@@ -1,0 +1,11 @@
+name = "prasenjit-volunteer-app"
+main = "index.ts"
+compatibility_date = "2024-09-11"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "volunteer-db"
+database_id = "PASTE_YOUR_D1_ID_HERE"
+
+[vars]
+ADMIN_TOKEN = "admin123"
