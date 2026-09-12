@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS volunteers (id TEXT PRIMARY KEY, name TEXT NOT NULL, father_name TEXT NOT NULL, dob TEXT, gender TEXT, mobile TEXT NOT NULL UNIQUE, whatsapp TEXT, full_address TEXT NOT NULL, district TEXT, assembly TEXT, status TEXT DEFAULT 'pending', created_at DATETIME DEFAULT CURRENT_TIMESTAMP);
