@@ -1,11 +1,11 @@
-name = "prasenjit-volunteer-app"
+name = "prasenjit-shop-api"
 main = "index.ts"
 compatibility_date = "2024-09-11"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "volunteer-db"
-database_id = "PASTE_YOUR_D1_ID_HERE"
+database_name ="prasenjit-shop-api"
+database_id = "82a3374e-ff31-4263-b985-1b44adfd645a"
 
 [vars]
 ADMIN_TOKEN = "admin123"
