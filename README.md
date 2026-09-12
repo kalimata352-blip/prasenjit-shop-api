@@ -9,6 +9,7 @@
 5. GitHub Repo Settings > Secrets:
    - CF_API_TOKEN = তোমার Cloudflare Token
    - CF_ACCOUNT_ID = Account ID
+   - 
 6. wrangler.toml এ ADMIN_TOKEN বদলে দাও (যেমন admin123 -> তোমার পাসওয়ার্ড)
 7. Push করলেই Auto Deploy হবে
 
