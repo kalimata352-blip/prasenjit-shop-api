@@ -402,7 +402,7 @@ export default {
       const token = req.headers.get("X-Admin-Token") || url.searchParams.get("token") || "";
       if (token !== env.ADMIN_TOKEN) return Response.json({ success: false, message: "Unauthorized" }, { headers });
       const parts = url.pathname.split("/");
-      const id = parts[3];
+      const id = parts[4];
       const body: any = await req.json();
       const newStatus = (body.status||'').toLowerCase();
       if (!['pending','approved','rejected'].includes(newStatus)) return Response.json({ success: false, message: "Invalid status" }, { headers });
